@@ -1,0 +1,6 @@
+ACF For Link Array:
+
+			<?php $link = get_field('learn_more');
+			if($link){ $target = $link['target'] ? $link['target'] : '_self';  ?>
+			<a href="<?php echo $link['url']; ?>" target="<?php echo $target;?>"><?php echo $link['title']; ?></a>
+			<?php } ?>

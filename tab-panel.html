@@ -1,0 +1,53 @@
+<section id="retirement-tabs" class="retirement-tabs">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="body-widget">
+					<?php $tab_menu=1; if(have_rows('rps_income_strategies')): ?>
+					<ul class="nav nav-pills" role="tablist">
+						<?php  while(have_rows('rps_income_strategies')):the_row() ?>
+						<li class="nav-item">
+						  <a class="nav-link <?php if($tab_menu==1) { echo 'active'; } ?>" data-toggle="pill" href="#home<?php echo $tab_menu; ?>">
+							<img src="<?php the_sub_field('rps_icon'); ?>" class="small-icon" alt="Icon<?php echo $tab_menu; ?>">
+							<?php the_sub_field('rps_strategies_title'); ?>
+							<img src="<?php echo get_template_directory_uri(); ?>/images/active-arrow.png" class="active-img<?php echo $tab_menu; ?>" alt="" />
+						  </a>
+						</li>
+					    <?php $tab_menu++; endwhile; ?>
+					</ul>
+				 <?php endif; ?>
+				</div>
+			</div>
+			<div class="col-sm-9">
+				<div class="right-tab">
+					
+					<?php $tab_content=1; if(have_rows('rps_income_strategies')): ?>
+					<div class="tab-content">
+						<?php  while(have_rows('rps_income_strategies')):the_row() ?>
+						<div id="home<?php echo $tab_content; ?>" class="tab-pane <?php if($tab_content==1) { echo 'active'; } else { echo 'fade';} ?>">
+							  <div class="row">
+								<div class="col-md-7">
+									<div class="body-widget">
+										<h3 class="heading-title4">
+											<?php the_field('rps_section_title'); ?> <br> <?php the_sub_field('rps_strategies_title'); ?>
+										</h3>
+										<div class="yellow-divider"></div>
+										  <?php the_sub_field('rps_add_description'); ?>
+									</div>
+								</div>
+								<?php $strategy_img= get_sub_field('rps_add_image'); ?>
+								<div class="col-md-5">
+									<div class="body-widget">
+										<img src="<?php echo $strategy_img['url']; ?>" class="img-fluid" alt="<?php echo $strategy_img['alt']; ?>">
+									</div>
+								</div>
+							</div>
+						</div>
+						 <?php $tab_content++; endwhile; ?>
+					</div>
+					 <?php endif; ?>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

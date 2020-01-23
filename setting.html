@@ -1,0 +1,166 @@
+<?php function theme_settings_page(){ ?>
+    <div class="wrap">
+        <h1>Theme Options</h1>
+        <form method="post" action="options.php">
+            <?php
+                settings_fields("section");
+                do_settings_sections("theme-options");
+                submit_button();
+            ?>
+        </form>
+        </div>
+<?php }
+
+function add_theme_menu_item()
+{
+    add_menu_page("Theme Options", "Theme Options", "manage_options", "option-page", "theme_settings_page", null, 99);
+}
+add_action("admin_menu", "add_theme_menu_item");
+
+
+function display_dlogo_element()
+{
+    ?>
+        <input type="text" name="dlogo_url" style="width:50%;" id="dlogo_url" value="<?php echo get_option('dlogo_url'); ?>" />
+    <?php
+}
+function display_rlogo_element()
+{
+    ?>
+        <input type="text" name="rlogo_url" style="width:50%;" id="rlogo_url" value="<?php echo get_option('rlogo_url'); ?>" />
+    <?php
+}
+function display_navigation_element()
+{
+    ?>
+        <input type="text" name="navigation_head" style="width:50%;" id="navigation_head" value="<?php echo get_option('navigation_head'); ?>" />
+    <?php
+}
+function display_quicklinks_element()
+{
+    ?>
+        <input type="text" name="quicklinks_head" style="width:50%;" id="quicklinks_head" value="<?php echo get_option('quicklinks_head'); ?>" />
+    <?php
+}
+function display_follow_us_element()
+{
+    ?>
+        <input type="text" name="follow_us_head" style="width:50%;" id="follow_us_head" value="<?php echo get_option('follow_us_head'); ?>" />
+    <?php
+}
+function display_contact_us_element()
+{
+    ?>
+        <input type="text" name="contact_us_head" style="width:50%;" id="contact_us_head" value="<?php echo get_option('contact_us_head'); ?>" />
+    <?php
+}
+function display_newyork_element()
+{
+    ?>
+        <textarea name="newyork_address" style="width:50%;" id="newyork_address"><?php echo get_option('newyork_address'); ?></textarea>
+    <?php
+}
+function display_newyork_phone()
+{
+    ?>
+       <input type="text" name="newyork_phone" style="width:50%;" id="newyork_phone" value="<?php echo get_option('newyork_phone'); ?>" />
+    <?php
+}
+function display_jackv_element()
+{
+    ?>
+        <textarea name="jackv_address" style="width:50%;" id="jackv_address"><?php echo get_option('jackv_address'); ?></textarea>
+    <?php
+}
+function display_jackv_phone()
+{
+    ?>
+       <input type="text" name="jackv_phone" style="width:50%;" id="jackv_phone" value="<?php echo get_option('jackv_phone'); ?>" />
+    <?php
+}
+function display_flogo_element()
+{
+    ?>
+        <input type="text" name="flogo_url" style="width:50%;" id="flogo_url" value="<?php echo get_option('flogo_url'); ?>" />
+    <?php
+}
+function display_facebook_element()
+{
+    ?>
+        <input type="text" name="facebook_url" style="width:50%;" id="facebook_url" value="<?php echo get_option('facebook_url'); ?>" />
+    <?php
+}
+function display_twitter_element()
+{
+    ?>
+        <input type="text" name="twitter_url" style="width:50%;" id="twitter_url" value="<?php echo get_option('twitter_url'); ?>" />
+    <?php
+}
+function display_youtube_element()
+{
+    ?>
+        <input type="text" name="youtube_url" style="width:50%;" id="youtube_url" value="<?php echo get_option('youtube_url'); ?>" />
+    <?php
+}
+function display_insta_element()
+{
+    ?>
+        <input type="text" name="insta_url" style="width:50%;" id="insta_url" value="<?php echo get_option('insta_url'); ?>" />
+    <?php
+}
+function display_disclaimer_element()
+{
+    ?>
+        <textarea name="fdisclaimer" style="width:50%;" id="fdisclaimer"><?php echo get_option('fdisclaimer'); ?></textarea>
+    <?php
+}
+function display_copy_right()
+{
+    ?>
+        <input type="text" name="copy_right" style="width:50%;" id="copy_right" value="<?php echo get_option('copy_right'); ?>" />
+    <?php
+}
+
+
+function display_option_page_fields()
+{
+    add_settings_section("section", "All Settings", null, "theme-options");
+    
+    add_settings_field("dlogo_url", "Website Header Logo Url", "display_dlogo_element", "theme-options", "section");
+    add_settings_field("navigation_head", "Navigation Heading", "display_navigation_element", "theme-options", "section");
+    add_settings_field("quicklinks_head", "Quick Links Heading ", "display_quicklinks_element", "theme-options", "section");
+    add_settings_field("follow_us_head", "Follow Us Heading", "display_follow_us_element", "theme-options", "section");
+     add_settings_field("facebook_url", "Facebook Link", "display_facebook_element", "theme-options", "section");
+    add_settings_field("twitter_url", "Twitter Link", "display_twitter_element", "theme-options", "section");
+    add_settings_field("youtube_url", "Youtube Link", "display_youtube_element", "theme-options", "section");
+    add_settings_field("insta_url", "Instagram Link", "display_insta_element", "theme-options", "section");
+    add_settings_field("contact_us_head", "Contact Us Heading", "display_contact_us_element", "theme-options", "section");
+    add_settings_field("jackv_address", "Jacksonville Office Address", "display_jackv_element", "theme-options", "section");
+    add_settings_field("jackv_phone", "Jacksonville Office Phone Number", "display_jackv_phone", "theme-options", "section");
+    add_settings_field("newyork_address", "New York Office Address", "display_newyork_element", "theme-options", "section");
+    add_settings_field("newyork_phone", "New York Office Phone Number", "display_newyork_phone", "theme-options", "section");
+    add_settings_field("flogo_url", "Website Footer Logo Url", "display_flogo_element", "theme-options", "section");
+    add_settings_field("rlogo_url", "The Roar Logo Url", "display_rlogo_element", "theme-options", "section");
+    add_settings_field("fdisclaimer", "Disclaimer", "display_disclaimer_element", "theme-options", "section");
+    add_settings_field("copy_right", "Copyright", "display_copy_right", "theme-options", "section");
+
+
+    register_setting("section", "dlogo_url");
+    register_setting("section", "navigation_head");
+    register_setting("section", "quicklinks_head");
+    register_setting("section", "follow_us_head");
+    register_setting("section", "contact_us_head");
+    register_setting("section", "newyork_address");
+    register_setting("section", "newyork_phone");
+    register_setting("section", "jackv_address");
+    register_setting("section", "jackv_phone");
+    register_setting("section", "flogo_url");
+    register_setting("section", "facebook_url");
+    register_setting("section", "twitter_url");
+    register_setting("section", "youtube_url");
+    register_setting("section", "insta_url");
+    register_setting("section", "rlogo_url");
+    register_setting("section", "fdisclaimer");
+    register_setting("section", "copy_right");
+}
+add_action("admin_init", "display_option_page_fields");

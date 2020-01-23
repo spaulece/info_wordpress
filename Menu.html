@@ -1,0 +1,33 @@
+1.To Register for Nav Menu:
+
+<?php wp_nav_menu(array('theme_location'=>'main','menu_class'=>'', 'container'=>'' )); ?>
+
+register_nav_menus(
+			array(
+				'main' => __( 'Main Menu', 'twentynineteen' ),
+				'footer' => __( 'Footer Menu', 'twentynineteen' ),
+				'footer2' => __( 'Footer Menu2', 'twentynineteen' ),
+				'social' => __( 'Social Links Menu', 'twentynineteen' ),
+			)
+		);
+
+2.To Register a dynamic sidebar:
+
+			register_sidebar(
+		array(
+			'name'          => __( 'social', 'twentynineteen' ),
+			'id'            => 'sidebar-5',
+			'description'   => __( 'Add widgets here to appear in your footer.', 'twentynineteen' ),
+			'before_widget' => '',
+			'after_widget'  => '',
+			'before_title'  => '',
+			'after_title'   => '',
+		)
+	);
+
+   							Then :<?php dynamic_sidebar('sidebar-3');?>
+							<?php// echo do_shortcode('[contact-form-7 id="18" title="Contact form 1"]');?>
+							<?php dynamic_sidebar('sidebar-4');?>
+
+3.For Form Shortcode:  
+						<?php echo do_shortcode(get_field('form_shortcode')); ?>

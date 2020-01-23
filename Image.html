@@ -1,0 +1,23 @@
+1.	<?php $ming= get_field('msec_bg_image'); ?>
+	<img src="<?php echo $ming['url'];?>"class="img-fluid" alt="<?php echo $ming['alt']; ?>">
+
+2.To Changing in css background image:
+
+	<?php $bgimg=get_field('bg_img', 8); if($bgimg){ ?>
+		<div id="header-wrapper" class="header-slider" style="background: #444 url(<?php echo $bgimg;?>) no-repeat center center fixed;">
+		<?php }else{ ?>
+		<div id="header-wrapper" class="header-slider">
+	<?php } ?>
+
+3.To Access style background Imgae:
+
+					style=" background: url(<?php the_field('section_background_image');?>) no-repeat;background-size: cover;">
+
+
+4.Adding Featured Image :
+		
+										<?php if ( has_post_thumbnail() ) {the_post_thumbnail(); } ?>
+																or
+										<?php $url = get_the_post_thumbnail_url( get_the_ID(), 'full' ); ?>
+
+5.

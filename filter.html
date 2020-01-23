@@ -1,0 +1,189 @@
+<?php
+/*
+ *Template Name: Case Study
+ */
+get_header(); ?>
+<?php if(have_posts()): while(have_posts()): the_post() ?>
+
+<?php $who_we_banner = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' ); $image_alt = get_post_meta(get_post_thumbnail_id(), '_wp_attachment_image_alt', true); ?>
+
+<section id="inner-banner" class="inner-banner">
+	<div id="demo" class="carousel slide" data-ride="carousel">  
+	  <div class="carousel-inner">
+		<div class="carousel-item active">
+		<?php  if($who_we_banner) { ?>
+		  <img src="<?php echo $who_we_banner[0]; ?>" class="slider-inner" alt="<?php echo $image_alt;  ?>">
+		<?php } else { ?>
+		  <img src="/wp-content/uploads/2019/10/1368238655.jpg" class="slider-inner" alt="Who we are banner">
+		<?php } ?>
+		  <div class="inner-overlay"></div>
+		</div>		
+		<!--start inner banner content desktop view-->
+		<div class="inner-banner-content">
+			<div class="container">
+				<div class="body-widget">
+					<h1 class="inner-banner-title"><?php the_title(); ?></h1>
+				</div>
+			</div>
+		</div>
+		<!--end inner banner content desktop view-->
+		
+	  </div>  
+	</div>
+	<!--start inner banner content mobile view-->
+	<div class="inner-mobile">
+		<div class="container">
+			<div class="body-widget text-center">
+					<h2 class="inner-banner-title"><?php the_title(); ?></h2>
+			</div>
+		</div>
+	</div>
+	<!--end inner banner content mobile view-->
+</section>
+
+<section id="case-study" class="case-study">
+	<div class="container">
+		
+
+		<?php  $terms= get_terms(array('case_study_category'),array('order_by'=>'menu_order')); ?>
+		<div class="body-widget text-center">
+			<div class="tabs-center">
+				<div class="tabs-middle">
+					<ul class="nav nav-pills" role="tablist">
+						<li class="nav-item">
+						  <a class="nav-link active" data-toggle="pill" href="#home">All</a>
+						</li>
+						<?php foreach ($terms as $term) { ?>
+						<li class="nav-item">
+						  <a class="nav-link" data-toggle="pill" href="#<?php echo $term->slug; ?>"><?php echo $term->name;  ?></a>
+						</li>
+					   <?php  } ?>
+				
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="case-top">
+		
+			<div class="tab-content">
+				<div id="home" class="tab-pane active">
+					<div class="case-study-widget">
+						<div class="body-widget text-center">
+							 <?php the_content();  ?>
+						</div>
+					</div>
+					<div class="tabs-top">
+						<div class="row justify-content-center">
+							<?php $case_st = array('post_type'=>'case_studies', 'posts_per_page'=> -1); 
+											$case_study= new WP_Query($case_st);
+										if($case_study->have_posts()): while($case_study->have_posts()): $case_study->the_post(); 
+							?>
+							<div class="col-sm-4">
+								<div class="case-repeat">
+									<?php $case_image= wp_get_attachment_image_src(get_post_thumbnail_id(),'full');  ?>
+									<div class="body-widget">
+										<img src="<?php echo $case_image[0]; ?>" class="img-fluid" alt="">
+									</div>
+									<div class="case-study-main">
+										<div class="body-widget text-center">
+											<h2 class="heading-title5"><?php the_title();  ?></h2>
+											<p>
+												<?php  echo wp_trim_words(get_the_content(),'20','...'); ?>
+											</p>
+											<div class="btn-top">
+												<div class="common-read hvr-wobble-horizontal">
+													<a href="<?php the_field('cscase_study_pdf'); ?>" target="_blank">Read More</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<?php endwhile; wp_reset_postdata(); endif;  ?>
+						</div>
+					</div>
+				</div>
+
+				
+				<?php  foreach ( $terms as $term ) {
+						 $args = array('post_type' => 'case_studies','posts_per_page' => -1,
+							 'tax_query' => array( array(
+							 'taxonomy' => 'case_study_category','field' => 'id','terms' => $term->term_id ) )
+							  );
+				   ?>
+				 
+				
+				<div id="<?php echo $term->slug; ?>" class="tab-pane fade">
+				
+					<div class="case-study-widget">
+						<div class="body-widget text-center">
+							<p><?php echo $term->description; ?></p>
+						</div>
+					</div>
+					
+					<div class="tabs-top">
+						<div class="row justify-content-center">
+							<?php  $args_loop= new WP_Query($args); 
+							   if($args_loop->have_posts()): while($args_loop->have_posts()): $args_loop->the_post()
+							?>
+							<div class="col-sm-4">
+							   <div class="case-repeat">
+								 <?php $case_image= wp_get_attachment_image_src(get_post_thumbnail_id(),'full');  ?>
+									<div class="body-widget">
+										<img src="<?php echo $case_image[0]; ?>" class="img-fluid" alt="">
+									</div>
+									<div class="case-study-main">
+										<div class="body-widget text-center">
+											<h2 class="heading-title5"><?php the_title();  ?></h2>
+											<p>
+												<?php  echo wp_trim_words(get_the_content(),'20','...'); ?>
+											</p>
+											<div class="btn-top">
+												<div class="common-read hvr-wobble-horizontal">
+													<a href="<?php the_field('cscase_study_pdf'); ?>" target="_blank">Read More</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<?php endwhile; endif; wp_reset_postdata(); ?>
+						</div>
+					</div>
+				</div>
+			
+			<?php } ?>
+		</div>
+			
+		</div>
+		
+	</div>
+</section>
+
+<div id="call-action" class="call-action">
+	<div id="demo-call" class="carousel slide" data-ride="carousel">  
+	  <div class="carousel-inner">
+	  	<?php $cta_bg= get_field('cta_background_image',68); ?>
+		<div class="carousel-item active">
+		<?php if($cta_bg){ ?>
+		 <img src="<?php echo $cta_bg['url']; ?>" class="call-img" alt="<?php echo $cta_bg['alt']; ?>">
+		<?php }  else { ?>
+		  <img src="/wp-content/uploads/2019/12/705981208-1.jpg" class="call-img" alt="CTA Background">
+		<?php } ?>
+		</div>
+		<!--start form content -->
+		<div class="call-content">
+			<div class="container">
+				<?php echo do_shortcode(get_field('cta_form_shortcode',68)); ?>
+			</div>
+		</div>
+		<!--end form content -->
+	  </div>  
+	</div>
+	
+</div>
+
+<?php endwhile; endif;  ?>
+
+<?php get_footer(); ?>

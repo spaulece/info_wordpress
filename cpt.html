@@ -1,0 +1,173 @@
+1.To register A custom Post Type:
+
+add_theme_support( 'post-thumbnails' );
+add_post_type_support( 'our-service', 'thumbnail' );
+// Our custom post type function
+function create_posttype() {
+register_post_type( 'our-service',
+// CPT Options
+array(
+    'labels' => array(
+        'name' => __( 'Our Services' ),
+        'singular_name' => __( 'our service' )
+    ),
+    'public' => true,
+    'has_archive' => true,
+    'rewrite' => array('slug' => 'our-service'),
+)
+);
+
+add_post_type_support( 'our-portfolio', 'thumbnail' );
+register_post_type( 'our-portfolio',
+// CPT Options
+array(
+    'labels' => array(
+        'name' => __( 'Our-portfolio' ),
+        'singular_name' => __( 'our-portfolio' )
+		
+    ),
+    'public' => true,
+    'has_archive' => true,
+    'rewrite' => array('slug' => 'our-portfolio'),
+)
+);
+
+}
+// Hooking up our function to theme setup
+add_action( 'init', 'create_posttype' ); //hook
+
+function create_my_taxonomies() {
+register_taxonomy('portfolio_type','our-portfolio',
+array(
+    'labels' => array(
+        'name' => 'Category',
+    ),
+    'show_ui' => true,
+    'show_tagcloud' => false,
+    'hierarchical' => true
+)
+);
+}
+add_action('init', 'create_my_taxonomies');
+
+2.For Post Type With CSS effect:
+		<div class="row">
+			<?php $cat=1; $an; $post=array('post_type'=>'our-service','posts_per_page'=>-1);
+			$allpost=new WP_Query($post);
+			if($allpost->have_posts()): while($allpost->have_posts()) : $allpost->the_post();
+			if($cat==1 || $cat%4==1){
+			$an="fadeInLeft";	
+			}elseif($cat==2 || ($cat%2==0 && $cat%4!=0)){
+			$an="fadeInDown";
+			}elseif($cat==3 || $cat%3==0){
+			$an="fadeInUp";	
+			}else{
+			$an="fadeInRight";		
+			}
+			$cat++;
+			?>
+		   <div class="col-sm-3 wow <?php echo $an;?>">
+			<div class="services-section">
+           		<div class="services-img">
+										<?php if ( has_post_thumbnail() ) {the_post_thumbnail(); } ?>
+																or
+										<?php $url = get_the_post_thumbnail_url( get_the_ID(), 'full' ); ?>
+              					<img src="<?php echo $url;?>" class="img-fluid" alt="<?php the_title();?>">
+           		</div>
+           		<div class="services-content">
+           			<h3><?php the_title();?></h3>
+           		<p><?php echo substr(get_the_content(),0,83);?>...</p>
+				<?php echo wp_trim_words(get_the_content(),'20','...'); ?>
+           	<a href="<?php the_permalink();?>">Learn More <img src="<?php echo get_template_directory_uri();?>/images/arrow.png" alt=""></a>
+           		</div>
+           	</div>
+           </div>
+	</div>
+<?php endwhile; endif; wp_reset_query();?>
+
+or,
+
+<section id="services" class="section orange">
+		<div class="container">
+			<h4><?php the_field('serhead'); ?></h4>
+			<!-- Four columns -->
+			<div class="row">
+			<?php  $count=1; $an; if (have_rows('serseccontents')) : while(have_rows('serseccontents')) : the_row(); $sicon=get_sub_field('sericons');
+				if($count==1 || $count%4==1){$an='animated-fast'; }
+				elseif($count==2 || $count%4==2){ $an='animated'; }
+				elseif($count==3 || $count%4==3) {$an='animated-fast';}
+				else $an='animated-slow';
+				$count++;
+			?>
+				<div class="span3 <?php echo $an; ?> flyIn">
+					<div class="service-box">
+						<img src="<?php echo $sicon['url']; ?>" alt="<?php echo $sicon['alt']; ?>" />
+						<h2><?php the_sub_field('sersubhead'); ?></h2>
+						<p><?php the_sub_field('sersubcontents'); ?></p>
+					</div>
+				</div>
+				<?php endwhile; endif; ?>
+			</div>
+		</div>
+	</section>
+
+3.For post type in single-our-service.php:
+
+										<?php
+										get_header();
+										while(have_posts()) : the_post();
+										?>
+										<section id="inner-banner" class="inner-banner"> 
+											  <div class="carousel-inner">
+												<div class="carousel-item">
+												<?php $img= get_the_post_thumbnail_url(get_the_id(),'full');?>
+												  <img src="<?php echo $img;?>" class="img-fluid" alt="">
+												  <div class="inner-overlay"></div>
+												</div>
+											 </div>
+										</section>
+										<section id="featured" class="featured">
+											<div class="container">
+												<div class="featured-heading">
+													<h2 class="contact-header"><?php the_title();?></h2>
+												</div>
+												<p><?php the_content();?></p>
+											</div>
+										</section>
+										<?php endwhile; get_footer();
+										
+4.For Post Type Accordian:
+
+section id="web-resources" class="web-resources">
+	<div class="container">
+		<?php $terms= get_terms(array('web_resource_cat'), array('order_by'=>'menu_order')); ?>
+		<div id="accordion">
+			<?php $cd=1; foreach ($terms as $term) { ?>
+			<div class="card <?php if($cd==1) { ?>active-main <?php }  ?>">
+			  <div class="card-header <?php if ($cd==1){ ?> active <?php } ?>">
+				<a class="<?php if($cd<>1) { echo 'collapsed'; } ?> card-link" data-toggle="collapse" href="#collapse<?php echo $cd; ?>">
+				  <?php echo $term->name; ?>
+				</a>
+			  </div>
+			  <div id="collapse<?php echo $cd; ?>" class="collapse <?php  if($cd==1){  echo 'show'; } ?>" data-parent="#accordion">
+				<div class="card-body">
+					<?php  $args = array('post_type' => 'web_resources','posts_per_page' => -1,
+							 'tax_query' => array( array(
+							 'taxonomy' => 'web_resource_cat','field' => 'id','terms' => $term->term_id ) )
+							  );
+					        $web_res= new WP_Query($args);
+					?>
+					<ul>
+						<?php if($web_res->have_posts()): while($web_res->have_posts()): $web_res->the_post(); ?>
+						<li>
+							<a href="<?php the_field('resources_link'); ?>" target="_blank"><?php the_title(); ?></a>
+						</li>
+					<?php endwhile; wp_reset_postdata(); endif;?>
+					</ul>
+				</div>
+			  </div>
+			</div>
+		    <?php $cd++; } ?>
+		</div>
+	</div>
+</section>

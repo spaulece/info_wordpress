@@ -1,0 +1,53 @@
+1.To Access all the media files from directory:
+												<?php echo get_template_directory_uri();?>/
+
+
+
+2.To Register In Address:
+				<div class="col-sm-11">
+						<div class="contact-add">
+							<a href="tel:<?php the_field('phone_no_1');?>"><?php the_field('phone_no_1');?> </a>
+							<?php if(!empty(get_field('phone_no_2'))){?>
+							/<a href="tel:<?php the_field('phone_no_2');?>"><?php the_field('phone_no_2');?></a> 
+							<?php }?>
+						</div>
+					</div>
+					<div class="col-xs-2">
+						<div class="contact-logo">
+							<img src="<?php echo get_template_directory_uri();?>/images/fax.png" alt="" class="img-fluid">
+						</div>
+					</div>
+					<div class="col-sm-11">
+						<div class="contact-add">
+						<a href="fax:<?php the_field('fax');?>"><?php the_field('fax');?></a>
+						</div>
+					</div>
+					<div class="col-xs-2">
+						<div class="contact-logo">
+							<img src="<?php echo get_template_directory_uri();?>/images/mail.png" alt="" class="img-fluid">
+						</div>
+					</div>
+					<div class="col-sm-11">
+						<div class="contact-add">
+						<a href="mailto:<?php the_field('email_id');?>"><?php the_field('email_id');?></a>
+						</div>
+					</div>
+3.For Icon :  src="<?php echo home_url();?>
+
+4.To change a CSS class if is  not done:
+										jQuery( document ).ready(function($) {
+   											 $(".menu-item-31 a").addClass("client-outline");
+											});
+5.Fot Header And Footer:
+
+					<?php get_footer();?>
+
+					<?php 
+					/**
+					* Template Name: Home
+					*/
+					get_header();
+					?>
+
+6.class="section-bg"<?php get_field()){ echo 'style=" background:'.get_field('').'"'; } ?>
+

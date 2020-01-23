@@ -1,0 +1,18 @@
+1. <a href="<?php echo home_url(); ?>">
+	<?php $ming = get_field('logoh', 8); if($ming){?>
+	<img src="<?php echo $ming['url'];?>"class="logo" alt="<?php echo $ming['alt']; ?>">	
+	<?php }else{?>
+	<img src="<?php echo home_url();?>/wp-content/uploads/2019/11/logo.png"class="logo" alt="Student Finance Relief">	
+	<?php } ?>
+	</a>
+
+2.<div class="carousel-inner">
+		<div class="carousel-item active">
+		<?php $url =  get_the_post_thumbnail_url(get_the_ID(),'full'); if($url){?>
+			<img src="<?php echo $url;?>"class="slider-img" alt="banner">
+			<?php }else{?>
+			 <img src="<?php echo home_url();?>/wp-content/uploads/2019/11/trump.jpg" class="slider-img" alt="banner">
+			<?php } ?>
+		</div>
+	  </div>
+	</div>

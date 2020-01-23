@@ -1,0 +1,254 @@
+1. To make a carousal:
+
+	<section id="banner-area" class="banner-area">
+	<div id="demo" class="carousel slide" data-ride="carousel">	 
+	<ol class="carousel-indicators">
+	<?php $cat=0; if(have_rows('add_banner_image')) : while(have_rows('add_banner_image')) : the_row(); ?>
+	  <li data-target="#demo" data-slide-to="<?php echo $cat;?>"<?php if($cat==0){ echo 'class="active"';}?></li>
+	  <?php $cat++; endwhile; endif;?>
+    </ol> 
+	  <div class="carousel-inner">
+	  	<?php $cat=1; if(have_rows('add_banner_image')) : while(have_rows('add_banner_image')) : the_row(); 
+        $bimg=get_sub_field('upload_banner_image'); if($bimg){
+	  	?>
+		<div class="carousel-item <?php if($cat==1){ echo 'active';}?>">
+		  <img src="<?php echo $bimg['url'];?>" class="slider-img" alt="<?php echo $bimg['alt'];?>">
+		  <div class="inner-overlay"></div>
+		</div>
+	<?php $cat++; } endwhile; endif;?>	
+		<!--start desktop view-->
+		<div class="banner-content">
+			<div class="container">
+				<div class="body-widget text-center wow fadeInLeft">
+					<?php $img=get_field('banner_top_icon'); if($img){ ?>
+					<a href="#"><img src="<?php echo $img['url'];?>" alt="<?php echo $img['alt'];?>" class="img-fluid"></a>
+				<?php }else{ ?>
+					<a href="#"><img src="<?php echo get_template_directory_uri();?>/images/banner-logo.png" alt="" class="img-fluid"></a>
+				<?php } ?>
+					<h2 class="banner-heading"><?php the_field('banner_first_text');?></h2>
+					<h3><?php the_field('banner_second_text');?></h3>
+					 <h4><?php the_field('banner_third_text');?></h4>
+				</div>
+			 </div>
+		 </div>
+		 <!--end desktop view-->
+	  </div>
+	  <?php $total=count(get_field('add_banner_image'));  if($total!=1){?>
+	  <a class="carousel-control-prev arrow-control" href="#demo" data-slide="prev">
+		<span><img src="<?php echo get_template_directory_uri();?>/images/left-arrow.png" class="img-responsive" alt=""></span>
+	  </a>
+	  <a class="carousel-control-next arrow-control" href="#demo" data-slide="next">
+		<span><img src="<?php echo get_template_directory_uri();?>/images/right-arrow.png" class="img-responsive" alt=""></span>
+	  </a>
+	<?php }?>
+	</div>
+    <!--start mobile view-->
+	<div class="mobile-content">
+		<div class="container">
+		 <div class="body-widget text-center">
+			<a href="#"><img src="<?php echo get_template_directory_uri();?>/images/banner-logo.png" alt="" class="img-fluid"></a>
+			<h2 class="banner-heading">Welcome to</h2>
+			<h3>Cannon Wealth Management</h3>
+            <h4>Creating ease with wealth</h4>
+		</div>
+	</div>
+	<!--end mobile view-->
+	</div>
+</section>
+
+Another Example:
+
+<section id="banner-area" class="banner-area ">
+	<div id="demo" class="carousel slide" data-ride="carousel">	  
+	  <div class="carousel-inner ">
+	  	<?php $cat=1; if(have_rows('add_banner_image')) : while(have_rows('add_banner_image')) : the_row(); 
+        $bimg=get_sub_field('upload_banner_image'); if($bimg){
+	  	?>
+		<div class="carousel-item <?php if($cat==1){ echo 'active';}?>">
+		<img src="<?php echo $bimg['url'];?>" class="slider-img" alt="<?php echo $bimg['alt'];?>">
+		  <div class="inner-overlay"></div>
+		</div>
+		<?php $cat++; } endwhile; endif;?>
+		<!--start desktop view-->
+		<div class="banner-content">
+			<div class="container">
+				<div class="body-widget text-center">
+				<div class="body-widget text-center">
+					<h2 class="banner-sub-heading"><?php the_field('banner_sub_heading');?></h2>
+					<h1 class="banner-heading"><?php the_field('banner_heading');?></h1>
+								<?php if( get_field('banner_slider_line') ): ?>
+							<img src="<?php the_field('banner_slider_line'); ?>" />
+								<?php endif; ?>
+					<img src="<?php //echo get_template_directory_uri();?>/images/slider-line.png" alt="">
+				</div>
+			</div>
+		</div>
+		<!--end desktop view-->
+	  </div>
+	   <?php $total=count(get_field('add_banner_image'));  if($total!=1){?>
+	  <a class="carousel-control-prev arrow-control" href="#demo" data-slide="prev">
+		<span><i class="fa fa-angle-left"></i></span>
+	  </a>
+	  <a class="carousel-control-next arrow-control" href="#demo" data-slide="next">
+		<span><i class="fa fa-angle-right"></i></span>
+	  </a>
+	  <?php }?>
+	</div>
+</div>
+	<!--start mobile view-->
+	<div class="mobile-content">
+		<div class="container">
+				<div class="body-widget text-center">
+					<h2 class="banner-sub-heading"><?php the_field('banner_sub_heading');?></h2>
+					<h1 class="banner-heading"><?php the_field('banner_heading');?></h1>
+				</div>
+			</div>
+	</div>
+	<!--end mobile view-->
+</section>
+
+
+2. ebus theme slider section:
+
+<div id="home" class="slider-area">
+    <div class="bend niceties preview-2">
+      <div id="ensign-nivoslider" class="slides">
+        <?php $cat=1; if(have_rows('add_banner')) : while(have_rows('add_banner')) : the_row();
+        $img = get_sub_field('banner_image');
+        ?> 
+        <img src="<?php echo $img['url']; ?>" alt="<php echo $img['alt']; ?>" title="#slider-direction-<?php echo $cat;?>" />
+        <?php $cat++; endwhile; endif;?>
+      </div>
+      <!-- direction 1 -->
+       <?php $count=1; if(have_rows('add_banner')) : while(have_rows('add_banner')) : the_row();?> 
+      <div id="slider-direction-<?php echo $count;?>" class="slider-direction slider-<?php echo $count;?>">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="slider-content">
+                <!-- layer 1 -->
+                <?php $class= ($count ==1) ? 'slideInDown' : 'slideInUp'; ?>
+                <div class="layer-1-1 hidden-xs wow <?php echo $class;?>" data-wow-duration="2s" data-wow-delay=".2s">
+                  <h2 class="title1"><?php the_sub_field('banner_title_1'); ?> </h2>
+                </div>
+                <!-- layer 2 -->
+                <div class="layer-1-2 wow slideInUp" data-wow-duration="2s" data-wow-delay=".1s">
+                  <h1 class="title2"><?php the_sub_field('banner_title_2'); ?></h1>
+                </div>
+                <!-- layer 3 -->
+                <div class="layer-1-3 hidden-xs wow slideInUp" data-wow-duration="2s" data-wow-delay=".2s">
+                    <?php $link = get_sub_field('button_link_1');
+                 if($link){ $target = $link['target'] ? $link['target'] : '_self';  ?>
+                <a  class="ready-btn right-btn page-scroll" href="<?php echo $link['url']; ?>" target="<?php echo $target;?>"><?php echo    $link['title']; ?></a>
+              <?php } ?>
+             <?php $link = get_sub_field('button_link_2');
+            if($link){ $target = $link['target'] ? $link['target'] : '_self';  ?>
+           <a  class="ready-btn page-scroll" href="<?php echo $link['url']; ?>" target="<?php echo $target;?>"><?php echo $link['title']; ?></a>
+        <?php } ?>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <?php $count++; endwhile; endif;?>
+    </div>
+  </div>
+
+3.FAQ:
+
+<!-- Faq area start -->
+  <div class="faq-area area-padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="section-headline text-center">
+            <h2><?php the_field('headingfaq'); ?></h2>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="faq-details">
+            <div class="panel-group" id="accordion">
+                 <?php  $ck=1; $av; $ci; if(have_rows('section_q&a')) : while(have_rows('section_q&a')) : the_row();
+                  if($ck==1){
+                   $av = 'active'; 
+                   $ci='collapse in'; }
+                  else 
+                  $ci='collapse';
+                  ?>
+              <!-- Panel Default -->
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="check-title">
+					<a data-toggle="collapse" class="<?php echo $av; ?>" data-parent="#accordion" href="#check<?php echo $ck; ?>">
+                        <span class="acc-icons"></span><?php the_sub_field('faqquestion'); ?></a>
+				  </h4>
+                </div>
+                <div id="check<?php echo $ck; ?>" class="panel-collapsen <?php echo $ci ?>">
+                  <div class="panel-body">
+                    <p><?php the_sub_field('answerfaq'); ?></p>
+                  </div>
+                </div>
+              </div>
+              <?php  $ck++; endwhile; endif; ?>
+              <!-- End Panel Default -->
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="tab-menu">
+            <!-- Nav tabs -->
+           <ul class="nav nav-tabs" role="tablist">
+            <?php  $tl=1; $an; if(have_rows('section_right_q&afaq')) : while(have_rows('section_right_q&afaq')) : the_row();
+              if($tl==1){$an='active';}
+              else $an=null;
+             ?>
+              <li class="<?php echo $an; ?>">
+                <a href="#p-view-<?php echo $tl;?>" role="tab" data-toggle="tab"><?php the_sub_field('titleright');?></a>
+              </li>
+            <?php $tl++; endwhile; endif; ?>
+            </ul>
+          </div>
+          <div class="tab-content">
+             <?php  $t1=1; if(have_rows('section_right_q&afaq')) : while(have_rows('section_right_q&afaq')) : the_row(); ?>
+            <div class="tab-pane <?php if($t1==1){ echo 'active'; }?>" id="p-view-<?php echo $t1; ?>">
+              <div class="tab-inner">
+                <div class="event-content head-team">
+                  <h4><?php the_sub_field('titleright');?></h4>
+                 <?php the_sub_field('titledetails');?>
+                </div>
+              </div>
+            </div>
+             <?php  $t1++; endwhile; endif; ?>
+          </div>
+        </div>
+      </div>
+      <!-- end Row -->
+    </div>
+  </div>
+  <!-- End Faq Area -->
+
+
+  FAQ Another:
+
+
+  <section id="faq">
+      <div class="container">
+        <header class="section-header">
+          <h3>Frequently Asked Questions</h3>
+          <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque</p>
+        </header>
+        <ul id="faq-list" class="wow fadeInUp">
+		<?php $fa=1; if(have_rows('quesandans')) : while(have_rows('quesandans')) : the_row(); $fa++;  ?>
+          <li>
+            <a data-toggle="collapse" class="collapsed" href="#faq<?php echo $fa; ?>"><?php the_sub_field('ques'); ?><i class="ion-android-remove"></i></a>
+            <div id="faq<?php echo $fa; ?>" class="collapse" data-parent="#faq-list">
+              <p><?php the_sub_field('ans'); ?></p>
+            </div>
+          </li>
+		  <?php endwhile; endif;  ?> 
+        </ul>
+      </div>
+    </section><!-- #faq -->

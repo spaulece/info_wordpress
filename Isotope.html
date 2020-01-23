@@ -1,0 +1,60 @@
+1.For Isotope With Multiple Category added:
+<!-- Start portfolio Area -->
+  <div id="portfolio" class="portfolio-area area-padding fix">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="section-headline text-center">
+            <h2>Our Portfolio</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <!-- Start Portfolio -page -->
+        <div class="awesome-project-1 fix">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="awesome-menu ">
+              <ul class="project-menu">
+                <li><a href='#' class="active" data-filter="*">All</a></li>
+                  <?php $categories= get_terms("portfolio_type",array('hide_empty' => true));
+                  foreach($categories as $cat){  ?>
+                  <li><a href="#" data-filter=".<?php echo $cat->slug;?>"><?php echo $cat->name;?></a></li>
+                    <?php } ?>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="awesome-project-content">
+          <?php $post=array('post_type'=>'our-portfolio');
+            $allpost=new WP_Query($post);
+            if($allpost->have_posts()): while($allpost->have_posts()) : $allpost->the_post();
+            $tax = get_the_terms(get_the_ID(), 'portfolio_type');
+            $class="";
+            foreach($tax as $t){ $class .= $t->slug." "; }
+            ?>
+          <!-- single-awesome-project start -->
+          <div class="col-md-4 col-sm-4 col-xs-12 <?php echo $class;?>">
+            <div class="single-awesome-project">
+              <div class="awesome-img">
+                <a href="#">
+                    <?php $url = get_the_post_thumbnail_url( get_the_ID(), 'full' ); ?>
+              <img src="<?php echo $url; ?>" class="" alt="">
+                </a>
+                <div class="add-actions text-center">
+                  <div class="project-dec">
+                    <a class="venobox" data-gall="myGallery" href="<?php the_field('pop_up_image'); ?>">
+                      <h4><?php the_title(); ?></h4>
+                      <span><?php the_field('subjectprtfolio'); ?></span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- single-awesome-project end -->
+          <?php endwhile; endif; wp_reset_query(); ?>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- awesome-portfolio end -->
